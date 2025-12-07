@@ -93,7 +93,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Register')),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -130,16 +129,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
       TextFormField(
         controller: _emailController,
         decoration: const InputDecoration(
-          labelText: 'Email',
+          labelText: 'Correo Electrónico',
           border: OutlineInputBorder(),
         ),
         keyboardType: TextInputType.emailAddress,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter your email';
+            return 'Por favor ingrese su correo electrónico';
           }
           if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-            return 'Please enter a valid email';
+            return 'Por favor ingrese un correo electrónico válido';
           }
           return null;
         },
@@ -148,16 +147,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
       TextFormField(
         controller: _passwordController,
         decoration: const InputDecoration(
-          labelText: 'Password',
+          labelText: 'Contraseña',
           border: OutlineInputBorder(),
         ),
         obscureText: true,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter your password';
+            return 'Por favor ingrese su contraseña';
           }
           if (value.length < 8) {
-            return 'Password must be at least 8 characters';
+            return 'La contraseña debe tener al menos 8 caracteres';
           }
           return null;
         },
@@ -166,13 +165,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       TextFormField(
         controller: _confirmPasswordController,
         decoration: const InputDecoration(
-          labelText: 'Confirm Password',
+          labelText: 'Confirmar Contraseña',
           border: OutlineInputBorder(),
         ),
         obscureText: true,
         validator: (value) {
           if (value != _passwordController.text) {
-            return 'Passwords do not match';
+            return 'Las contraseñas no coinciden';
           }
           return null;
         },
@@ -182,13 +181,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         onPressed: _isLoading ? null : _register,
         child: _isLoading
             ? const CircularProgressIndicator()
-            : const Text('Register'),
+            : const Text('Registrarse'),
       ),
       TextButton(
         onPressed: () {
           Navigator.of(context).pop();
         },
-        child: const Text('Already have an account? Login'),
+        child: const Text('¿Ya tienes una cuenta? Iniciar sesión'),
       ),
     ];
   }
@@ -196,7 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   List<Widget> _buildConfirmationFields() {
     return [
       const Text(
-        'Check your email for the confirmation code',
+        'Por favor ingrese el código de confirmación enviado a su correo electrónico.',
         style: TextStyle(fontSize: 16),
         textAlign: TextAlign.center,
       ),
@@ -204,7 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       TextFormField(
         controller: _confirmationCodeController,
         decoration: const InputDecoration(
-          labelText: 'Confirmation Code',
+          labelText: 'Código de Confirmación',
           border: OutlineInputBorder(),
         ),
         keyboardType: TextInputType.number,
@@ -214,7 +213,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         onPressed: _isLoading ? null : _confirmRegistration,
         child: _isLoading
             ? const CircularProgressIndicator()
-            : const Text('Confirm Registration'),
+            : const Text('Confirmar Registro'),
       ),
     ];
   }

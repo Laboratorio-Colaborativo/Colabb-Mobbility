@@ -51,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -71,24 +70,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/Logo.png',
-                        height: 100,
-                      ),
+                      Image.asset('assets/images/Logo.png', height: 100),
                       const SizedBox(height: 32),
                       TextFormField(
                         controller: _emailController,
                         decoration: const InputDecoration(
-                          labelText: 'Email',
+                          labelText: 'Correo Electrónico',
                           border: OutlineInputBorder(),
                         ),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return 'Por favor ingrese su correo electrónico';
                           }
                           if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                            return 'Please enter a valid email';
+                            return 'Por favor ingrese un correo electrónico válido';
                           }
                           return null;
                         },
@@ -97,13 +93,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         controller: _passwordController,
                         decoration: const InputDecoration(
-                          labelText: 'Password',
+                          labelText: 'Contraseña',
                           border: OutlineInputBorder(),
                         ),
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
+                            return 'Por favor ingrese su contraseña';
                           }
                           return null;
                         },
@@ -113,13 +109,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: _isLoading ? null : _login,
                         child: _isLoading
                             ? const CircularProgressIndicator()
-                            : const Text('Login'),
+                            : const Text('Iniciar Sesión'),
                       ),
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pushNamed('/register');
                         },
-                        child: const Text('Don\'t have an account? Register'),
+                        child: const Text('¿No tienes una cuenta? Regístrate'),
                       ),
                     ],
                   ),
