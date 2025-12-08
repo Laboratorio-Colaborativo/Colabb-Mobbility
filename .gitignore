@@ -416,3 +416,74 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+# =========================
+# Flutter / Dart
+# =========================
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+.dartpad/
+
+# Build outputs
+build/
+android/.gradle/
+android/app/build/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+
+# =========================
+# Android
+# =========================
+*.keystore
+*.jks
+local.properties
+key.properties
+
+# =========================
+# iOS / macOS
+# =========================
+.DS_Store
+ios/Pods/
+ios/.symlinks/
+ios/Runner.xcworkspace
+ios/Runner.xcworkspace/contents.xcworkspacedata
+ios/Runner/GeneratedPluginRegistrant.*
+
+macos/Pods/
+macos/Flutter/ephemeral/
+macos/Runner/GeneratedPluginRegistrant.*
+
+# =========================
+# Linux / Windows
+# =========================
+linux/flutter/ephemeral/
+linux/flutter/generated_plugins.cmake
+linux/flutter/generated_plugin_registrant.*
+
+windows/flutter/ephemeral/
+windows/flutter/generated_plugins.cmake
+windows/flutter/generated_plugin_registrant.*
+
+# =========================
+# IDEs
+# =========================
+.idea/
+.vscode/
+*.iml
+
+# =========================
+# Logs & temp
+# =========================
+*.log
+*.tmp
+*.swp
+
+# =========================
+# Coverage
+# =========================
+coverage/
