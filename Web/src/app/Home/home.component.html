@@ -1,0 +1,175 @@
+
+<div class="space-y-20 pb-20">
+  <!-- HERO SECTION -->
+  <section class="relative grid lg:grid-cols-2 gap-16 items-center pt-8">
+    <div class="space-y-8 z-10">
+      <!-- Context Switcher -->
+      <div class="inline-flex bg-white p-1.5 rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] relative overflow-hidden">
+        <button
+          (click)="uiStateService.setUserMode('rider')"
+          class="relative z-10 px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center gap-2"
+          [ngClass]="uiStateService.userMode() === 'rider' ? 'bg-colabb-tech-blue text-white border-2 border-black' : 'text-gray-400 hover:text-black'"
+        >
+          <app-icon name="bike" [size]="16" [strokeWidth]="2.5"></app-icon> Motero
+        </button>
+        <button
+          (click)="uiStateService.setUserMode('workshop')"
+          class="relative z-10 px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center gap-2"
+          [ngClass]="uiStateService.userMode() === 'workshop' ? 'bg-colabb-brand-purple text-white border-2 border-black' : 'text-gray-400 hover:text-black'"
+        >
+          <app-icon name="wrench" [size]="16" [strokeWidth]="2.5"></app-icon> Taller
+        </button>
+      </div>
+
+      <div>
+        <!-- Headline -->
+        <h1 class="text-6xl lg:text-7xl font-black leading-[0.9] tracking-tight text-colabb-dark mb-4">
+          <ng-container *ngIf="uiStateService.userMode() === 'rider'; else workshopHeadline">
+            Tu moto <br />
+            <span class="relative inline-block">
+              <span class="absolute inset-0 bg-colabb-lime-light -skew-y-2 transform translate-y-2 -z-10"></span>
+              NO PARA.
+            </span>
+          </ng-container>
+          <ng-template #workshopHeadline>
+            Logística <br />
+            <span class="relative inline-block text-white px-2">
+              <span class="absolute inset-0 bg-colabb-brand-purple -rotate-1 skew-x-3 -z-10 border-2 border-black"></span>
+              PRO-GRADE.
+            </span>
+          </ng-template>
+        </h1>
+
+        <p class="text-xl text-gray-600 max-w-lg font-medium leading-relaxed">
+          {{ uiStateService.userMode() === 'rider'
+            ? "Repuestos originales en tiempo récord. El sistema operativo para los que viven sobre dos ruedas."
+            : "Infraestructura de abastecimiento para talleres modernos. Margen, velocidad y control total."
+          }}
+        </p>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 pt-2">
+        <doodle-button variant="action" [icon]="uiStateService.userMode() === 'rider' ? 'search' : 'zap'" routerLink="/catalog">
+          {{ uiStateService.userMode() === 'rider' ? "BUSCAR MI REPUESTO" : "PEDIDO MAYORISTA" }}
+        </doodle-button>
+        <doodle-button variant="outline" icon="phone" (click)="openWhatsApp()">
+           {{ uiStateService.userMode() === 'rider' ? "AYUDA POR WHATSAPP" : "SOPORTE TÉCNICO" }}
+        </doodle-button>
+      </div>
+
+      <!-- Metrics -->
+      <div class="grid grid-cols-3 gap-6 pt-8 border-t-2 border-dashed border-gray-300">
+        <ng-container *ngIf="uiStateService.userMode() === 'rider'; else workshopStats">
+          <app-stat-box label="Tiempo Medio" value="45m" sub="Zona Urbana"></app-stat-box>
+          <app-stat-box label="Inventario" value="12k" sub="Referencias"></app-stat-box>
+          <app-stat-box label="Confianza" value="4.9" sub="Estrellas"></app-stat-box>
+        </ng-container>
+        <ng-template #workshopStats>
+          <app-stat-box label="Tu Margen" value="25%" sub="Precio Gremio"></app-stat-box>
+          <app-stat-box label="Stock Virtual" value="∞" sub="Sin Inversión"></app-stat-box>
+          <app-stat-box label="Red Colabb" value="2.4k" sub="Talleres"></app-stat-box>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- VISUAL COLLAGE -->
+    <div class="relative h-[550px] w-full flex items-center justify-center">
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,0.1)] rounded-xl overflow-hidden"
+        [ngClass]="uiStateService.userMode() === 'rider' ? 'rotate-2' : '-rotate-1'"
+      >
+        <!-- Grid Pattern -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
+        
+        <div class="p-8 h-full flex flex-col justify-between relative">
+          <!-- Top Bar -->
+          <div class="flex justify-between items-center border-b-2 border-black pb-4">
+            <div class="flex gap-2">
+              <div class="w-3 h-3 rounded-full border-2 border-black bg-red-400"></div>
+              <div class="w-3 h-3 rounded-full border-2 border-black bg-yellow-400"></div>
+            </div>
+            <div class="font-mono text-xs font-bold bg-black text-white px-2 py-1">SYS_STATUS: ONLINE</div>
+          </div>
+
+          <!-- Central Graphic -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+            <ng-container *ngIf="uiStateService.userMode() === 'rider'; else workshopGraphic">
+              <div class="relative">
+                <app-icon name="package" [size]="120" [strokeWidth]="1" className="text-colabb-tech-blue"></app-icon>
+                <div class="absolute -top-4 -right-8">
+                  <span class="font-black text-sm bg-colabb-lime-light px-2 border border-black -rotate-12 inline-block shadow-sm">Llega YA!</span>
+                  <app-icon name="arrow-right" [size]="24" className="transform rotate-45 mt-1 ml-2"></app-icon>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #workshopGraphic>
+              <div class="relative">
+                <app-icon name="bar-chart-3" [size]="120" [strokeWidth]="1" className="text-colabb-brand-purple"></app-icon>
+                <div class="absolute -bottom-4 -left-8 bg-white border-2 border-black p-2 shadow-[4px_4px_0px_0px_#000]">
+                  <span class="font-mono text-xs font-bold block">REVENUE</span>
+                  <span class="font-black text-xl text-green-600">+$1.2M</span>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+
+          <!-- Bottom notes -->
+          <div class="font-mono text-[10px] text-gray-400">
+            // GENERATED BY COLABB_OS <br />
+            // ID: 8829-X
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES GRID -->
+  <section>
+    <div class="flex items-center gap-4 mb-8">
+      <h3 class="text-2xl font-black text-colabb-dark uppercase tracking-tight flex items-center gap-2">
+          <span class="bg-black text-white p-1"><app-icon name="cpu" [size]="24"></app-icon></span>
+          {{ uiStateService.userMode() === 'rider' ? "Para tu Máquina" : "Herramientas de Negocio" }}
+      </h3>
+      <div class="h-4 flex-1" style="background-image: linear-gradient(135deg, #000 25%, transparent 25%), linear-gradient(225deg, #000 25%, transparent 25%); background-size: 20px 20px; background-position: 0 0, 10px 0; height: 10px; opacity: 0.2;"></div>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6">
+      <app-doodle-card [highlight]="true">
+        <div class="w-12 h-12 rounded-full border-2 border-black bg-colabb-tech-blue-light flex items-center justify-center mb-4 text-colabb-tech-blue shadow-[2px_2px_0px_0px_#000]">
+          <app-icon name="clock" [size]="24" [strokeWidth]="2.5"></app-icon>
+        </div>
+        <h4 class="font-bold text-colabb-dark mb-2 text-lg uppercase">{{ uiStateService.userMode() === 'rider' ? "Entrega Flash" : "Just-in-Time" }}</h4>
+        <p class="text-sm text-gray-600 font-medium leading-relaxed">
+          {{ uiStateService.userMode() === 'rider' 
+              ? "Menos de 60 minutos. Nuestro algoritmo encuentra el repuesto más cercano a tu ubicación GPS." 
+              : "Elimina el inventario muerto. Pide la pieza exacta cuando el vehículo sube al elevador." }}
+        </p>
+      </app-doodle-card>
+      
+      <app-doodle-card>
+        <div class="w-12 h-12 rounded-full border-2 border-black bg-colabb-brand-purple-light flex items-center justify-center mb-4 text-colabb-brand-purple shadow-[2px_2px_0px_0px_#000]">
+          <app-icon name="shield-check" [size]="24" [strokeWidth]="2.5"></app-icon>
+        </div>
+        <h4 class="font-bold text-colabb-dark mb-2 text-lg uppercase">{{ uiStateService.userMode() === 'rider' ? "Garantía Total" : "Directo B2B" }}</h4>
+        <p class="text-sm text-gray-600 font-medium leading-relaxed">
+          {{ uiStateService.userMode() === 'rider' 
+              ? "Piezas originales o genéricos certificados. Si no le sirve a tu moto, te devolvemos la plata." 
+              : "Conexión directa con importadores. Sin intermediarios que inflen el precio. Trazabilidad total." }}
+        </p>
+      </app-doodle-card>
+
+      <app-doodle-card>
+        <div class="w-12 h-12 rounded-full border-2 border-black bg-colabb-lime-light-light flex items-center justify-center mb-4 text-black shadow-[2px_2px_0px_0px_#000]">
+          <app-icon name="activity" [size]="24" [strokeWidth]="2.5"></app-icon>
+        </div>
+        <h4 class="font-bold text-colabb-dark mb-2 text-lg uppercase">{{ uiStateService.userMode() === 'rider' ? "Soporte Experto" : "Vitrina Cloud" }}</h4>
+        <p class="text-sm text-gray-600 font-medium leading-relaxed">
+          {{ uiStateService.userMode() === 'rider' 
+              ? "¿Dudas con la referencia? Envía foto por WhatsApp y un mecánico experto te confirma." 
+              : "Vende repuestos que no tienes en stock físico. Multiplica tu catálogo x100 al instante." }}
+        </p>
+      </app-doodle-card>
+    </div>
+  </section>
+</div>

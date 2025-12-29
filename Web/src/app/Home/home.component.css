@@ -1,0 +1,27 @@
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px); /* 60px es la altura del header */
+  text-align: center;
+  padding: 2rem;
+  background-color: #f8f9fa;
+}
+
+.brand-showcase {
+  max-width: 700px;
+}
+
+.brand-name {
+  font-size: 5rem;
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: #212529;
+  margin-bottom: 1rem;
+}
+
+.inspirational-text {
+  font-size: 1.25rem;
+  color: #6c757d;
+  line-height: 1.6;
+}
