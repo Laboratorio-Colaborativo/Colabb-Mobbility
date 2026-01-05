@@ -8,7 +8,7 @@ module.exports = {
       colors: {
         // Base: Clean Whites & Grays
         // Accents: Cyan (Tech), Purple (Brand), Lime (Highlighter/Doodle)
-        'colabb-tech-blue': '#29A9E0',
+        'colabb-tech-blue': '#24aae1',
         'colabb-lime-light': '#DEDC00',
         'colabb-brand-purple': '#42007E',
         'colabb-dark': '#0F172A',

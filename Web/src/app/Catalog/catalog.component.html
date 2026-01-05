@@ -2,9 +2,9 @@
   Nota: Este template usa TailwindCSS y componentes personalizados como <app-icon> y <doodle-button>
   del código que proporcionaste. Asegúrate de que estén configurados en tu proyecto.
 -->
-<div class="space-y-8 pb-20">
+<div class="w-[95%] mx-auto space-y-8 pb-20">
   <!-- PROMO BANNER (Ejemplo de tu nuevo diseño) -->
-  <div class="relative rounded-lg overflow-hidden p-8 md:p-12 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] bg-[#29A9E0]">
+  <!-- <div class="relative rounded-lg overflow-hidden p-8 md:p-12 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] bg-[#29A9E0]">
     <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#FFF 2px, transparent 2px); background-size: 30px 30px;"></div>
     <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6 text-white">
       <div class="space-y-3">
@@ -24,84 +24,162 @@
         VER DESCUENTOS
       </doodle-button>
     </div>
-  </div>
+  </div> -->
 
-  <!-- FILTERS & SEARCH -->
-  <div class="sticky top-20 z-20 bg-white/90 backdrop-blur-md py-4 -mx-4 px-4 border-b-2 border-gray-100">
-    <div class="flex flex-col sm:flex-row justify-between gap-4">
-      <!-- Asumiendo que 'categories' es un array de objetos con {id, name} -->
-      <div class="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
-        <button (click)="categoryControl.setValue('')" class="px-4 py-2 rounded-md text-sm font-bold border-2 transition-all" [ngClass]="!categoryControl.value ? 'bg-black text-white border-black shadow-[2px_2px_0px_0px_#ccc]' : 'bg-white text-gray-600 border-gray-200 hover:border-black hover:text-black'">
-          Todas
+  <!-- Main Layout: Filters on Left, Products on Right -->
+  <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-x-8 gap-y-6">
+    
+    <!-- ======================== -->
+    <!--    COLUMNA DE FILTROS    -->
+    <!-- ======================== -->
+    <aside class="lg:sticky top-24 self-start space-y-6">
+      <div class="flex justify-between items-center px-2">
+        <h3 class="text-lg font-black tracking-tight text-gray-800">Categorías</h3>
+        <button *ngIf="areFiltersActive" (click)="clearAllFilters()" class="flex items-center gap-1 text-xs font-semibold text-gray-500 hover:text-red-500 transition-colors animate-fade-in">
+          <app-icon name="x" [size]="14"></app-icon>
+          <span>Limpiar</span>
         </button>
-        <button *ngFor="let cat of categories" (click)="categoryControl.setValue(cat.id)" class="px-4 py-2 rounded-md text-sm font-bold border-2 transition-all" [ngClass]="categoryControl.value === cat.id ? 'bg-black text-white border-black shadow-[2px_2px_0px_0px_#ccc]' : 'bg-white text-gray-600 border-gray-200 hover:border-black hover:text-black'">
-          {{ cat.name }}
+      </div>
+      
+      <!-- Filtros de Categorías (Árbol) -->
+      <div class="flex flex-col gap-1">
+        
+        <!-- Botón "Todo el Catálogo" -->
+        <button 
+          (click)="selectParentCategory(null)" 
+          class="w-full text-left px-3 py-2.5 rounded-md text-sm font-bold transition-all flex justify-between items-center"
+          [ngClass]="!activeParent ? 'bg-black text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'">
+          <span>TODO EL CATÁLOGO</span>
         </button>
-      </div>
-      <div class="relative group">
-        <app-icon name="search" [size]="16" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-black transition-colors"></app-icon>
-        <input type="text" [formControl]="searchControl" placeholder="Buscar por nombre o referencia..." class="pl-10 pr-4 py-2 rounded-md border-2 border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[#29A9E0] focus:bg-white w-full sm:w-64 transition-all font-mono text-gray-600 placeholder:font-sans" />
-      </div>
-    </div>
-  </div>
 
-  <!-- PRODUCT GRID -->
-  <div *ngIf="products$ | async as products; else loading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-    <div *ngFor="let product of products" (click)="openProductDetails(product)" class="bg-white rounded-lg border-2 border-gray-100 p-4 hover:border-black hover:shadow-[6px_6px_0px_0px_#000] transition-all group cursor-pointer flex flex-col h-full relative">
-
-      <div class="aspect-square bg-gray-50 rounded-md mb-4 flex items-center justify-center relative border border-gray-100 overflow-hidden">
-        <img [src]="product.imagen" [alt]="product.nombre" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-
-        <!-- <div *ngIf="product.badge" class="absolute top-2 left-2 transform -rotate-2">
-            <marker-badge [text]="product.badge" [type]="'tech'"></marker-badge>
-        </div> -->
-
-        <div class="absolute bottom-2 right-2 text-[10px] font-mono font-bold text-gray-500 bg-white px-1.5 py-0.5 border border-gray-200 shadow-sm" [class.text-green-600]="product.tiene_stock" [class.text-red-600]="!product.tiene_stock">
-          {{ product.tiene_stock ? 'En Stock' : 'Agotado' }}
-        </div>
-      </div>
-
-      <div class="flex-1 flex flex-col">
-        <h3 class="font-bold text-gray-800 text-sm leading-snug mb-1">{{ product.nombre }}</h3>
-        <div class="flex items-center gap-1 mb-4">
-          <app-icon name="package" [size]="12" className="text-gray-400"></app-icon>
-          <span class="text-[10px] font-mono text-gray-500 font-bold">Ref: {{ product.referencia }}</span>
-        </div>
-
-        <div class="mt-auto flex items-center justify-between pt-3 border-t-2 border-dashed border-gray-100">
-          <div class="flex flex-col">
-            <span class="font-mono font-black text-lg text-[#0F172A] tracking-tight">
-              {{ product.precio_desde | currency:'COP':'symbol':'1.0-0' }}
-            </span>
-          </div>
-          <button class="w-8 h-8 rounded-md bg-black text-white flex items-center justify-center hover:bg-[#DEDC00] hover:text-black hover:shadow-[2px_2px_0px_0px_#000] transition-all border-2 border-transparent hover:border-black">
-            <app-icon name="chevron-right" [size]="18" [strokeWidth]="3"></app-icon>
+        <!-- Categorías Padre (Nivel 1) -->
+        <div *ngFor="let cat of categoriesTree" class="flex flex-col">
+          <button 
+            (click)="selectParentCategory(cat)" 
+            class="w-full text-left px-3 py-2.5 rounded-md text-sm font-bold transition-all flex justify-between items-center"
+            [ngClass]="activeParent?.id === cat.id ? 'bg-[#29A9E0] text-white' : 'text-gray-600 hover:bg-gray-100'">
+            
+            <span>{{ cat.nombre }}</span>
+            
+            <app-icon *ngIf="cat.subcategorias?.length" name="chevron-right" [size]="16" 
+              className="transition-transform" [class.rotate-90]="activeParent?.id === cat.id"></app-icon>
           </button>
+
+          <!-- Subcategorías (Nivel 2) -->
+          <div *ngIf="activeParent?.id === cat.id && cat.subcategorias?.length" 
+               class="pl-4 mt-1 space-y-1 border-l-2 border-gray-200 ml-2 animate-fade-in-down">
+            
+            <!-- Botón "Todo [Categoría Padre]" -->
+            <button 
+              (click)="selectSubCategory(activeParent!.id)"
+              class="w-full text-left px-3 py-1.5 rounded-md text-xs font-semibold transition-all"
+              [ngClass]="categoryControl.value === activeParent!.id ? 'bg-gray-200 text-black' : 'text-gray-500 hover:bg-gray-100'">
+              Todo {{ activeParent!.nombre }}
+            </button>
+
+            <!-- Botones de Subcategorías -->
+            <button *ngFor="let sub of cat.subcategorias" 
+              (click)="selectSubCategory(sub.id)" 
+              class="w-full text-left px-3 py-1.5 rounded-md text-xs font-semibold transition-all"
+              [ngClass]="categoryControl.value === sub.id ? 'bg-gray-200 text-black' : 'text-gray-500 hover:bg-gray-100'">
+              {{ sub.nombre }}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <ng-template #loading>
-    <div class="flex justify-center items-center p-16">
-      <p>Cargando productos...</p>
-    </div>
-  </ng-template>
+    </aside>
 
-  <!-- PAGINATION -->
-  <div *ngIf="metadata$ | async as meta" class="flex justify-center items-center gap-4 pt-8">
-    <ng-container *ngIf="meta && meta.total_items > meta.limit">
-      <doodle-button
-        variant="outline"
-        [disabled]="meta.page === 1"
-        (onClick)="changePage(meta.page - 1)">Anterior</doodle-button>
+    <!-- ======================== -->
+    <!--  COLUMNA DE CONTENIDO    -->
+    <!-- ======================== -->
+    <main class="space-y-6">
+      
+      <!-- Barra Superior: Búsqueda, Orden y Límite -->
+      <div class="sticky top-[80px] z-20 bg-white/90 backdrop-blur-md py-4 -mx-4 px-4 border-b-2 border-gray-100">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+          
+          <!-- Búsqueda -->
+          <div class="relative group w-full md:flex-1">
+            <app-icon name="search" [size]="16" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-black transition-colors"></app-icon>
+            <input type="text" [formControl]="searchControl" placeholder="Buscar por nombre o referencia..." class="pl-10 pr-4 py-2 rounded-md border-2 border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[#29A9E0] focus:bg-white w-full transition-all font-mono text-gray-600 placeholder:font-sans" />
+          </div>
 
-      <span class="font-mono text-sm text-gray-600">Página {{ meta.page }} de {{ Math.ceil(meta.total_items / meta.limit) }}</span>
+          <!-- Controles de Orden y Paginación -->
+          <div class="flex items-center gap-2 text-sm w-full md:w-auto">
+            <select [formControl]="sortControl" class="px-3 py-2 rounded-md border-2 border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[#29A9E0] focus:bg-white font-semibold text-gray-600">
+              <option value="default">Relevancia</option>
+              <option value="price_asc">Precio: Menor a Mayor</option>
+              <option value="price_desc">Precio: Mayor a Menor</option>
+              <option value="name_asc">Nombre: A-Z</option>
+            </select>
+            <select [formControl]="limitControl" class="px-3 py-2 rounded-md border-2 border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[#29A9E0] focus:bg-white font-semibold text-gray-600">
+              <option value="12">12 / pág</option>
+              <option value="24">24 / pág</option>
+              <option value="48">48 / pág</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-      <doodle-button
-        variant="outline"
-        [disabled]="meta.page * meta.limit >= meta.total_items"
-        (onClick)="changePage(meta.page + 1)">Siguiente</doodle-button>
-    </ng-container>
+      <!-- PRODUCT GRID -->
+      <div *ngIf="products$ | async as products; else loading" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div *ngFor="let product of products" (click)="openProductDetails(product)" class="bg-white rounded-lg border-2 border-gray-100 p-4 hover:border-black hover:shadow-[6px_6px_0px_0px_#000] transition-all group cursor-pointer flex flex-col h-full relative">
+
+          <div class="aspect-square bg-gray-50 rounded-md mb-4 flex items-center justify-center relative border border-gray-100 overflow-hidden">
+            <img [src]="product.imagen" [alt]="product.nombre" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+
+            <!-- <div *ngIf="product.badge" class="absolute top-2 left-2 transform -rotate-2">
+                <marker-badge [text]="product.badge" [type]="'tech'"></marker-badge>
+            </div> -->
+
+            <div class="absolute bottom-2 right-2 text-[10px] font-mono font-bold text-gray-500 bg-white px-1.5 py-0.5 border border-gray-200 shadow-sm" [class.text-green-600]="product.tiene_stock" [class.text-red-600]="!product.tiene_stock">
+              {{ product.tiene_stock ? 'En Stock' : 'Agotado' }}
+            </div>
+          </div>
+
+          <div class="flex-1 flex flex-col">
+            <h3 class="font-bold text-gray-800 text-sm leading-snug mb-1">{{ product.nombre }}</h3>
+            <div class="flex items-center gap-1 mb-4">
+              <app-icon name="package" [size]="12" className="text-gray-400"></app-icon>
+              <span class="text-[10px] font-mono text-gray-500 font-bold">Ref: {{ product.referencia }}</span>
+            </div>
+
+            <div class="mt-auto flex items-center justify-between pt-3 border-t-2 border-dashed border-gray-100">
+              <div class="flex flex-col">
+                <span class="font-mono font-black text-lg text-[#0F172A] tracking-tight">
+                  {{ product.precio_desde | currency:'COP':'symbol':'1.0-0' }}
+                </span>
+              </div>
+              <button class="w-8 h-8 rounded-md bg-black text-white flex items-center justify-center hover:bg-[#DEDC00] hover:text-black hover:shadow-[2px_2px_0px_0px_#000] transition-all border-2 border-transparent hover:border-black">
+                <app-icon name="chevron-right" [size]="18" [strokeWidth]="3"></app-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #loading>
+        <div class="flex justify-center items-center p-16">
+          <p>Cargando productos...</p>
+        </div>
+      </ng-template>
+
+      <!-- PAGINATION -->
+      <div *ngIf="metadata$ | async as meta" class="flex justify-center items-center gap-4 pt-8">
+        <ng-container *ngIf="meta && meta.total_items > meta.limit">
+          <doodle-button
+            variant="ghost"
+            [disabled]="meta.page === 1"
+            (onClick)="changePage(meta.page - 1)">Anterior</doodle-button>
+
+          <span class="font-mono text-sm text-gray-600">Página {{ meta.page }} de {{ Math.ceil(meta.total_items / meta.limit) }}</span>
+
+          <doodle-button
+            variant="ghost"
+            [disabled]="meta.page * meta.limit >= meta.total_items"
+            (onClick)="changePage(meta.page + 1)">Siguiente</doodle-button>
+        </ng-container>
+      </div>
+    </main>
   </div>
 </div>
 

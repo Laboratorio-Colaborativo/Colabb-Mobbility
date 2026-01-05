@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './Catalog/header.component';
+import { HeaderComponent } from './shared/components/Header/header.component';
 import { CommonModule } from '@angular/common';
 
 

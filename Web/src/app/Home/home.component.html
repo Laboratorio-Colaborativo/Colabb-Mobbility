@@ -1,5 +1,5 @@
 
-<div class="space-y-20 pb-20">
+<div class="w-[90%] mx-auto space-y-20 pb-20">
   <!-- HERO SECTION -->
   <section class="relative grid lg:grid-cols-2 gap-16 items-center pt-8">
     <div class="space-y-8 z-10">
@@ -8,16 +8,16 @@
         <button
           (click)="uiStateService.setUserMode('rider')"
           class="relative z-10 px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center gap-2"
-          [ngClass]="uiStateService.userMode() === 'rider' ? 'bg-colabb-tech-blue text-white border-2 border-black' : 'text-gray-400 hover:text-black'"
+          [ngClass]="uiStateService.userMode() === 'rider' ? 'bg-colabb-tech-blue text-black border-2 border-black' : 'text-gray-400 hover:text-black'"
         >
-          <app-icon name="bike" [size]="16" [strokeWidth]="2.5"></app-icon> Motero
+          <app-icon name="bike" [size]="20" [strokeWidth]="2.5"></app-icon> Motero
         </button>
         <button
           (click)="uiStateService.setUserMode('workshop')"
           class="relative z-10 px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center gap-2"
-          [ngClass]="uiStateService.userMode() === 'workshop' ? 'bg-colabb-brand-purple text-white border-2 border-black' : 'text-gray-400 hover:text-black'"
+          [ngClass]="uiStateService.userMode() === 'workshop' ? 'bg-colabb-lime-light text-black border-2 border-black' : 'text-gray-400 hover:text-black'"
         >
-          <app-icon name="wrench" [size]="16" [strokeWidth]="2.5"></app-icon> Taller
+          <app-icon name="wrench" [size]="20" [strokeWidth]="2.5"></app-icon> Taller
         </button>
       </div>
 
@@ -27,14 +27,14 @@
           <ng-container *ngIf="uiStateService.userMode() === 'rider'; else workshopHeadline">
             Tu moto <br />
             <span class="relative inline-block">
-              <span class="absolute inset-0 bg-colabb-lime-light -skew-y-2 transform translate-y-2 -z-10"></span>
+              <span class="absolute inset-0 bg-colabb-tech-blue -skew-y-2 transform translate-y-2 -z-10"></span>
               NO PARA.
             </span>
           </ng-container>
           <ng-template #workshopHeadline>
             Logística <br />
             <span class="relative inline-block text-white px-2">
-              <span class="absolute inset-0 bg-colabb-brand-purple -rotate-1 skew-x-3 -z-10 border-2 border-black"></span>
+              <span class="absolute inset-0 bg-colabb-lime-light -rotate-1 skew-x-3 -z-10 border-2 border-black"></span>
               PRO-GRADE.
             </span>
           </ng-template>
@@ -48,80 +48,36 @@
         </p>
       </div>
 
-      <!-- Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 pt-2">
-        <doodle-button variant="action" [icon]="uiStateService.userMode() === 'rider' ? 'search' : 'zap'" routerLink="/catalog">
-          {{ uiStateService.userMode() === 'rider' ? "BUSCAR MI REPUESTO" : "PEDIDO MAYORISTA" }}
-        </doodle-button>
-        <doodle-button variant="outline" icon="phone" (click)="openWhatsApp()">
-           {{ uiStateService.userMode() === 'rider' ? "AYUDA POR WHATSAPP" : "SOPORTE TÉCNICO" }}
-        </doodle-button>
-      </div>
-
-      <!-- Metrics -->
-      <div class="grid grid-cols-3 gap-6 pt-8 border-t-2 border-dashed border-gray-300">
-        <ng-container *ngIf="uiStateService.userMode() === 'rider'; else workshopStats">
-          <app-stat-box label="Tiempo Medio" value="45m" sub="Zona Urbana"></app-stat-box>
-          <app-stat-box label="Inventario" value="12k" sub="Referencias"></app-stat-box>
-          <app-stat-box label="Confianza" value="4.9" sub="Estrellas"></app-stat-box>
-        </ng-container>
-        <ng-template #workshopStats>
-          <app-stat-box label="Tu Margen" value="25%" sub="Precio Gremio"></app-stat-box>
-          <app-stat-box label="Stock Virtual" value="∞" sub="Sin Inversión"></app-stat-box>
-          <app-stat-box label="Red Colabb" value="2.4k" sub="Talleres"></app-stat-box>
-        </ng-template>
-      </div>
-    </div>
-
-    <!-- VISUAL COLLAGE -->
-    <div class="relative h-[550px] w-full flex items-center justify-center">
-      <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,0.1)] rounded-xl overflow-hidden"
-        [ngClass]="uiStateService.userMode() === 'rider' ? 'rotate-2' : '-rotate-1'"
-      >
-        <!-- Grid Pattern -->
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
-        
-        <div class="p-8 h-full flex flex-col justify-between relative">
-          <!-- Top Bar -->
-          <div class="flex justify-between items-center border-b-2 border-black pb-4">
-            <div class="flex gap-2">
-              <div class="w-3 h-3 rounded-full border-2 border-black bg-red-400"></div>
-              <div class="w-3 h-3 rounded-full border-2 border-black bg-yellow-400"></div>
-            </div>
-            <div class="font-mono text-xs font-bold bg-black text-white px-2 py-1">SYS_STATUS: ONLINE</div>
-          </div>
-
-          <!-- Central Graphic -->
-          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-            <ng-container *ngIf="uiStateService.userMode() === 'rider'; else workshopGraphic">
-              <div class="relative">
-                <app-icon name="package" [size]="120" [strokeWidth]="1" className="text-colabb-tech-blue"></app-icon>
-                <div class="absolute -top-4 -right-8">
-                  <span class="font-black text-sm bg-colabb-lime-light px-2 border border-black -rotate-12 inline-block shadow-sm">Llega YA!</span>
-                  <app-icon name="arrow-right" [size]="24" className="transform rotate-45 mt-1 ml-2"></app-icon>
-                </div>
-              </div>
-            </ng-container>
-            <ng-template #workshopGraphic>
-              <div class="relative">
-                <app-icon name="bar-chart-3" [size]="120" [strokeWidth]="1" className="text-colabb-brand-purple"></app-icon>
-                <div class="absolute -bottom-4 -left-8 bg-white border-2 border-black p-2 shadow-[4px_4px_0px_0px_#000]">
-                  <span class="font-mono text-xs font-bold block">REVENUE</span>
-                  <span class="font-black text-xl text-green-600">+$1.2M</span>
-                </div>
-              </div>
-            </ng-template>
-          </div>
-
-          <!-- Bottom notes -->
-          <div class="font-mono text-[10px] text-gray-400">
-            // GENERATED BY COLABB_OS <br />
-            // ID: 8829-X
-          </div>
+      <!-- Metrics & buttons -->
+      <div>
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 pt-2">
+          <doodle-button [variant]="uiStateService.userMode() === 'rider' ? 'primary' : 'action'" [icon]="uiStateService.userMode() === 'rider' ? 'search' : 'zap'"
+            routerLink="/catalog">
+            {{ uiStateService.userMode() === 'rider' ? "BUSCAR MI REPUESTO" : "PEDIDO MAYORISTA" }}
+          </doodle-button>
+          <doodle-button variant="verde" icon="phone" (click)="openWhatsApp()">
+            {{ uiStateService.userMode() === 'rider' ? "AYUDA POR WHATSAPP" : "SOPORTE TÉCNICO" }}
+          </doodle-button>
         </div>
+        <!-- Metrics -->
+        <div class="grid grid-cols-3 gap-6 pt-8 border-t-2 border-dashed border-gray-300">
+          <ng-container *ngIf="uiStateService.userMode() === 'rider'; else workshopStats">
+            <app-stat-box label="Tiempo Medio" value="45m" sub="Zona Urbana"></app-stat-box>
+            <app-stat-box label="Valoración" value="4.2" sub="Estrellas"></app-stat-box>
+            <app-stat-box label="Envios" value="+ 10" sub="Realizados"></app-stat-box>
+          </ng-container>
+          <ng-template #workshopStats>
+            <app-stat-box label="Tu Margen" value="25%" sub="Precio Gremio"></app-stat-box>
+            <app-stat-box label="Stock Virtual" value="∞" sub="Sin Inversión"></app-stat-box>
+            <app-stat-box label="Red Colabb" value="2.4k" sub="Talleres"></app-stat-box>
+          </ng-template>
+        </div>
+      
       </div>
+
     </div>
+
   </section>
 
   <!-- FEATURES GRID -->

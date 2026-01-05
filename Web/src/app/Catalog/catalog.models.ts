@@ -4,6 +4,7 @@ export interface Product {
   nombre: string;
   descripcion: string | null;
   imagen: string;
+  imagenes?: string[];
   tipo: string;
   precio_desde: number;
   tiene_stock: boolean;
@@ -25,4 +26,13 @@ export interface CatalogMetadata {
 export interface CatalogResponse {
   metadata: CatalogMetadata;
   data: Product[];
+}
+
+export interface Category {
+  id: string;             // UUID
+  nombre: string;         // "Repuestos", "Frenos"
+  descripcion?: string;   // Opcional
+  es_titulo: boolean;     // true si es Padre
+  parent_id?: string;     // UUID del padre (opcional)
+  subcategorias?: Category[]; // RECURSIVIDAD: Una lista de sí misma
 }
