@@ -7,7 +7,7 @@
       <!-- Columna de Imagen -->
       <div class="product-image-container">
         <div class="product-image-wrapper"> <!-- Nuevo contenedor para la imagen principal y el overlay -->
-          <img [src]="(product.imagenes && product.imagenes.length > 0) ? product.imagenes[selectedImageIndex] : product.imagen" 
+          <img src="assets/Img/FiltroAirePrueba_Mesa de trabajo 1-02.png"
                [alt]="product.nombre" 
                class="product-image-large">
           <div *ngIf="product.imagenes && product.imagenes.length > 0" (click)="openGallery()" class="image-expand-overlay">

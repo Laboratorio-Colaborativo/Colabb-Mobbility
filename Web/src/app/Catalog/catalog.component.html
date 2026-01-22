@@ -126,9 +126,11 @@
         <div *ngFor="let product of products" (click)="openProductDetails(product)" class="bg-white rounded-lg border-2 border-gray-100 p-4 hover:border-black hover:shadow-[6px_6px_0px_0px_#000] transition-all group cursor-pointer flex flex-col h-full relative">
 
           <div class="aspect-square bg-gray-50 rounded-md mb-4 flex items-center justify-center relative border border-gray-100 overflow-hidden">
-            <img [src]="product.imagen" [alt]="product.nombre" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-
-            <!-- <div *ngIf="product.badge" class="absolute top-2 left-2 transform -rotate-2">
+          <app-product-image-wrapper 
+            src="assets/Img/Snapchat-32197135.png"
+            [alt]="product.nombre"
+            [type]="product.categoria_nombre === 'Motos' ? 'moteros' : 'talleres'">
+          </app-product-image-wrapper>            <!-- <div *ngIf="product.badge" class="absolute top-2 left-2 transform -rotate-2">
                 <marker-badge [text]="product.badge" [type]="'tech'"></marker-badge>
             </div> -->
 

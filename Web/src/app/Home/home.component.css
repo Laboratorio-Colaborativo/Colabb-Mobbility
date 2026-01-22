@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 80%;
   height: calc(100vh - 60px); /* 60px es la altura del header */
   text-align: center;
   padding: 2rem;

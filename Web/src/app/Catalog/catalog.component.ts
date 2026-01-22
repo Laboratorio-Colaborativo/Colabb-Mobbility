@@ -10,7 +10,7 @@ import { UiStateService } from '../shared/services/ui-state.service';
 import { DoodleButtonComponent } from '../shared/components/doodle-button/doodle-button.component';
 import { IconComponent } from '../shared/components/icons/icon.component';
 import { ProductDetailModalComponent } from './Components/product-detail-modal/product-detail-modal.component';
-
+import { ProductImageWrapperComponent } from './Components/product-image-wrapper/product-image-wrapper.component';
 @Component({
   selector: 'app-catalog',
   standalone: true,
@@ -19,7 +19,8 @@ import { ProductDetailModalComponent } from './Components/product-detail-modal/p
     ReactiveFormsModule,
     ProductDetailModalComponent,
     DoodleButtonComponent,
-    IconComponent
+    IconComponent,
+    ProductImageWrapperComponent
   ],
   templateUrl: './catalog.component.html'
 })

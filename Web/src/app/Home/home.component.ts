@@ -23,8 +23,19 @@ import { StatBoxComponent } from '../shared/components/stat-box/stat-box.compone
 export class HomeComponent {
   public uiStateService = inject(UiStateService);
 
-  openWhatsApp(): void {
-    // En un futuro, esto podría abrir una URL de WhatsApp
-    alert('Contactando a soporte por WhatsApp...');
+openWhatsApp(): void {
+  const whatsappTaller = 'https://wa.me/message/SICL53S57PGNJ1';
+  const whatsappMotero = 'https://wa.me/message/SICL53S57PGNJ1';
+
+  console.log('Current user mode:', this.uiStateService.userMode());
+
+  // Abrimos en una pestaña nueva para que el cliente no pierda de vista el catálogo
+  if (this.uiStateService.userMode() === 'rider') {
+    console.log('Opening WhatsApp for rider');
+    window.open(whatsappMotero, '_blank');
+  } else {
+    console.log('Opening WhatsApp for workshop');
+    window.open(whatsappTaller, '_blank');
   }
+}
 }
