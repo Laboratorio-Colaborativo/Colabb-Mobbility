@@ -1,0 +1,73 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <button class="close-button" (click)="onClose()" aria-label="Cerrar modal">&times;</button>
+
+    <div *ngIf="product" class="modal-body">
+      <!-- Columna de Imagen -->
+      <div class="product-image-container">
+        <div class="product-image-wrapper"> <!-- Nuevo contenedor para la imagen principal y el overlay -->
+          <img src="assets/Img/FiltroAirePrueba_Mesa de trabajo 1-02.png"
+               [alt]="product.nombre" 
+               class="product-image-large">
+          <div *ngIf="product.imagenes && product.imagenes.length > 0" (click)="openGallery()" class="image-expand-overlay">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          </div>
+        </div>
+        <!-- Thumbnails -->
+        <div *ngIf="product.imagenes && product.imagenes.length > 1" class="product-thumbnails">
+          <div *ngFor="let img of product.imagenes; let i = index" 
+               (click)="selectImage(i)"
+               class="thumbnail-item"
+               [class.active]="i === selectedImageIndex">
+            <img [src]="img" [alt]="'Vista previa ' + (i+1)">
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna de Detalles -->
+      <div class="product-details">
+        <h1>{{ product.nombre }}</h1>
+        <p class="ref">Referencia: {{ product.referencia }}</p>
+        <p class="desc">{{ product.descripcion || 'Sin descripción disponible.' }}</p>
+        <p class="category">Categoría: {{ product.categoria_nombre }}</p>
+        
+        <p class="compatibility" [class.compatible]="product.compatible_con_mi_moto">
+          {{ product.compatible_con_mi_moto ? '✓ Compatible con tu moto' : 'Compatibilidad no confirmada' }}
+        </p>
+        <div class="price-stock-container">
+          <span class="price">{{ product.precio_desde | currency:'COP':'symbol':'1.0-0' }}</span>
+          <span class="stock" [class.in-stock]="product.tiene_stock" [class.out-of-stock]="!product.tiene_stock">
+            {{ product.tiene_stock ? 'En Stock' : 'Agotado' }}
+          </span>
+        </div>
+        <button class="btn btn-primary btn-block" [disabled]="!product.tiene_stock">Comprar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Galería a Pantalla Completa (Carrusel) -->
+<div *ngIf="isGalleryOpen" class="gallery-overlay" (click)="closeGallery()">
+  
+  <button class="gallery-close-button" (click)="closeGallery()" aria-label="Cerrar galería">&times;</button>
+
+  <button *ngIf="product && product.imagenes && product.imagenes.length > 1" 
+          (click)="$event.stopPropagation(); prevImage()" 
+          class="gallery-nav-button prev">
+    &#10094;
+  </button>
+
+  <button *ngIf="product && product.imagenes && product.imagenes.length > 1" 
+          (click)="$event.stopPropagation(); nextImage()" 
+          class="gallery-nav-button next">
+    &#10095;
+  </button>
+
+  <div class="gallery-image-container" (click)="$event.stopPropagation()">
+    <img *ngIf="product && product.imagenes"
+         [src]="product.imagenes[selectedImageIndex]" 
+         [alt]="product.nombre" 
+         class="gallery-image">
+  </div>
+</div>

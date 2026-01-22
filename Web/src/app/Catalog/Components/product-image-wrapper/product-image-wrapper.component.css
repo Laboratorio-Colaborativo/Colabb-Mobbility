@@ -1,0 +1,34 @@
+/* Variables de color de Colabb */
+.wrapper {
+  background-color: #f3f4f6; /* Un gris base por si acaso */
+  border-radius: 0.5rem; /* Opcional: bordes redondeados */
+}
+
+/* === LÓGICA DE COLORES === */
+
+/* CASO 1: TALLERES (Fondo Amarillo, Patrón Azul) */
+.wrapper.talleres {
+  background-color: #24aae1; /* Amarillo Colabb */
+}
+.wrapper.talleres .pattern-overlay {
+  /* Aquí cargamos tu patrón */
+  background-image: url('/assets/patron.png'); 
+  /* Si el patrón es un PNG negro/azul, se verá aquí. */
+  /* Si usas la técnica SVG Mask que hablamos, avísame para darte el CSS de máscara */
+  opacity: 0.4; /* Ajusta la opacidad para que no pelee con el producto */
+  background-size: 150px; /* Tamaño de los logos */
+  background-repeat: repeat;
+}
+
+/* CASO 2: MOTEROS (Fondo Azul, Patrón Amarillo) */
+.wrapper.moteros {
+  background-color: #00AEEF; /* Azul Colabb */
+}
+.wrapper.moteros .pattern-overlay {
+  background-image: url('/assets/patron.png');
+  opacity: 0.4; 
+  background-size: 150px;
+  background-repeat: repeat;
+  /* TRUCO: Si tu patrón es una imagen fija y necesitas invertir colores, 
+     podrías necesitar un filtro o tener 2 imágenes de patrones distintas en assets */
+}
